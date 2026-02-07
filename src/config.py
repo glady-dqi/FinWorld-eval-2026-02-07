@@ -20,7 +20,13 @@ class Config:
     def __post_init__(self):
         if self.universe is None:
             self.universe = [
+                # Expanded large-cap universe
                 "AAPL","MSFT","NVDA","AMZN","META","GOOGL","TSLA","AMD","AVGO","ASML",
                 "JPM","JNJ","XOM","PG","UNH","HD","COST","PEP","KO","DIS",
                 "BAC","WMT","V","MA","PFE","ABBV","CRM","ORCL","INTC","QCOM",
+                "CSCO","ADBE","NFLX","CMCSA","TMO","CVX","MRK","ACN","DHR","LIN",
+                "ABT","MCD","NKE","TXN","NEE","PM","IBM","AMGN","RTX","GS",
+                "CAT","SPGI","SCHW","BLK","LOW","UPS","LMT","INTU","NOW",
+                "ISRG","BKNG","DE","UNP","ELV","C","BA","GE","PYPL","SBUX",
+                "AMAT","MU","ADI","MDT","GILD","FI","MDLZ","CVS","T","VZ",
             ]
