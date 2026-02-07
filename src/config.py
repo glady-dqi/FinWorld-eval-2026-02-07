@@ -15,6 +15,7 @@ class Config:
     target_vol: float = 0.15
     dd_cutoff: float = 0.20
     tc_bps: float = 10.0
+    slippage_bps: float = 0.0
 
     def __post_init__(self):
         if self.universe is None:

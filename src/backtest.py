@@ -30,7 +30,8 @@ def backtest(cfg: Config, df: pd.DataFrame) -> pd.DataFrame:
     # transaction costs on rebalance days (approx)
     df["w_prev"] = df.groupby("ticker")["w"].shift(1).fillna(0)
     df["turnover"] = (df["w"] - df["w_prev"]).abs()
-    df["tcost"] = df["turnover"] * (cfg.tc_bps / 10000.0)
+    total_cost_bps = cfg.tc_bps + cfg.slippage_bps
+    df["tcost"] = df["turnover"] * (total_cost_bps / 10000.0)
 
     df["pnl"] = df["w"] * df["ret"] - df["tcost"]
     port = df.groupby("date")["pnl"].sum().to_frame("port_ret")
