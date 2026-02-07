@@ -27,24 +27,59 @@ from .joblib_utils import (
     save_joblib
 )
 
-from .misc import (
-    add_weight_decay,
-    NativeScalerWithGradNormCount,
-    SmoothedValue,
-    MetricLogger,
-    all_reduce_mean,
-    is_main_process,
-    set_seed,
-    init_distributed_mode,
-    to_torch_dtype,
-    get_model_numel,
-    get_world_size,
-    get_rank,
-    modulate,
-    requires_grad,
-    cpu_mem_usage,
-    gpu_mem_usage,
-)
+try:
+    from .misc import (
+        add_weight_decay,
+        NativeScalerWithGradNormCount,
+        SmoothedValue,
+        MetricLogger,
+        all_reduce_mean,
+        is_main_process,
+        set_seed,
+        init_distributed_mode,
+        to_torch_dtype,
+        get_model_numel,
+        get_world_size,
+        get_rank,
+        modulate,
+        requires_grad,
+        cpu_mem_usage,
+        gpu_mem_usage,
+    )
+except Exception:
+    # Minimal fallbacks for environments without torch/psutil heavy deps.
+    def is_main_process():
+        return True
+    def all_reduce_mean(x):
+        return x
+    def set_seed(seed):
+        return None
+    def init_distributed_mode(*args, **kwargs):
+        return None
+    def to_torch_dtype(*args, **kwargs):
+        return None
+    def get_model_numel(*args, **kwargs):
+        return 0
+    def get_world_size():
+        return 1
+    def get_rank():
+        return 0
+    def modulate(*args, **kwargs):
+        return None
+    def requires_grad(*args, **kwargs):
+        return None
+    def cpu_mem_usage():
+        return 0
+    def gpu_mem_usage():
+        return 0
+    class SmoothedValue:  # minimal
+        pass
+    class MetricLogger:
+        pass
+    class NativeScalerWithGradNormCount:
+        pass
+    def add_weight_decay(*args, **kwargs):
+        return None
 
 from .encoding_utils import (
     encode_base64,
@@ -55,16 +90,19 @@ from .string_utils import (
     hash_text_sha256
 )
 
-from .gd import (
-    get_named_beta_schedule,
-    LossType,
-    space_timesteps,
-    ModelMeanType,
-    ModelVarType,
-    mean_flat,
-    normal_kl,
-    discretized_gaussian_log_likelihood
-)
+try:
+    from .gd import (
+        get_named_beta_schedule,
+        LossType,
+        space_timesteps,
+        ModelMeanType,
+        ModelVarType,
+        mean_flat,
+        normal_kl,
+        discretized_gaussian_log_likelihood
+    )
+except Exception:
+    pass
 
 
 from .timestamp_utils import (
@@ -79,10 +117,13 @@ from .record_utils import (
     PortfolioRecords
 )
 
-from .replay_buffer import (
-    build_storage,
-    ReplayBuffer
-)
+try:
+    from .replay_buffer import (
+        build_storage,
+        ReplayBuffer
+    )
+except Exception:
+    pass
 
 from .download_utils import (
     get_jsonparsed_data,
