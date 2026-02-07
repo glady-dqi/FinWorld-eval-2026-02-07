@@ -1,0 +1,50 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\title{FinWorld Technical Evaluation Report}
+\author{Gladys (Evaluation)}
+\date{2026-02-07}
+\begin{document}
+\maketitle
+
+\section*{Repo Summary}
+FinWorld is a large, modular platform for end-to-end financial AI research (data acquisition, factor engineering, modeling, RL/LLM agents, evaluation, and reporting). The repository is explicitly labeled as a preview release, and several components appear heavyweight or still evolving. The architecture is structured around configuration-driven experiments and registry-based modularity.
+
+\section*{Build / Installation Results}
+We attempted a clean installation using \texttt{python -m venv .venv} and \texttt{pip install -r requirements.txt}. The install began successfully and downloaded many dependencies, but it was halted due to very heavy GPU/CUDA and browser automation dependencies (e.g., CUDA-enabled PyTorch, Playwright/patchright stacks). Full installation is not feasible in a minimal CPU-only environment without system dependencies and GPU tooling. Full logs are in \texttt{logs/install\_pip.txt}.
+
+\section*{Tests}
+The repository includes a test suite under \texttt{tests/}, but \texttt{pytest} is not installed by default. Attempting to run tests resulted in \texttt{pytest: command not found} (see \texttt{logs/tests.txt}). A minimal sanity test was added (\texttt{tests/test\_alpha158\_sanity.py}) to validate factor computation output shape.
+
+\section*{Code Quality and Documentation}
+The codebase is well-structured with clear module separation and extensive HTML documentation. The README is comprehensive and outlines core features and workflows. However, the preview status suggests some modules may be incomplete or require significant external dependencies and credentials, which reduces out-of-the-box usability.
+
+\section*{Usability for Quantitative Finance Research}
+FinWorld is most useful as a **component library** rather than a full platform for specific research tasks. For quantitative research, the factor engineering utilities and data abstraction layers are particularly relevant. Heavy RL/LLM pipelines are less immediately useful for research on AI bubble diagnostics unless the research scope expands to agent-based trading experiments.
+
+\section*{Relevance to AI Bubble Research}
+\textbf{Applicable components:}
+\begin{itemize}
+\item \texttt{finworld/factor/alpha158.py}: rich factor construction and technical signals.
+\item \texttt{finworld/data} and \texttt{finworld/downloader}: data acquisition hooks (API keys required).
+\item \texttt{finworld/metric} and \texttt{finworld/evaluator}: evaluation metrics that can be adapted to bubble diagnostics.
+\end{itemize}
+\textbf{Less relevant:} RL/LLM training pipelines, distributed training, and presentation layers.
+
+\section*{Integration Demo}
+A minimal integration demo is included in \texttt{scripts/integration\_demo\_alpha158.py}, which computes Alpha158 factors from synthetic OHLCV data.
+
+\section*{Recommendation}
+\textbf{PARTIALLY USEFUL.} FinWorld provides valuable factor-engineering and modular infrastructure but requires heavy dependencies and is labeled preview. It is recommended to extract and reuse factor utilities and selective components rather than adopting the full platform for AI bubble research.
+
+\section*{Checklist}
+\begin{itemize}
+\item Repo fork created and linked.
+\item Environment build attempted; install logs captured.
+\item Tests attempted; results logged.
+\item Evaluation report written.
+\item Integration paths documented.
+\end{itemize}
+
+\end{document}

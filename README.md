@@ -377,3 +377,48 @@ The website features:
 **FinWorld** - Empowering Financial AI Research and Applications
 
 *Built with ❤️ by the FinWorld Team*
+---
+# Evaluation Summary (2026-02-07)
+
+## Repo Summary
+FinWorld is an ambitious end-to-end financial AI platform with modules spanning data acquisition, factor engineering, model training (ML/DL/RL/LLM), and evaluation. The architecture is modular with registries, configuration-driven experiments, and a broad set of tasks (forecasting, trading, portfolio, LLM reasoning). The repo appears to be a **preview version**; several components are present but may be incomplete or in flux.
+
+## Build / Installation Results
+- Attempted **pip install -r requirements.txt** in a clean venv.
+- The install process began but was **stopped mid-way** due to extremely heavy dependencies (e.g., CUDA-enabled PyTorch, Playwright stack, RL/LLM toolchain).
+- Partial log: `logs/install_pip.txt`.
+- Many packages download correctly, but full installation is not feasible in a minimal CPU-only environment without GPU/CUDA and system dependencies.
+
+## Tests
+- Repo includes tests in `tests/`, but **pytest is not installed** by default.
+- Attempt to run `pytest -q` failed: `pytest: command not found` (see `logs/tests.txt`).
+- Added minimal sanity test: `tests/test_alpha158_sanity.py` (validates factor computation shapes).
+
+## Code Quality & Documentation
+- Structure is clean and modular; extensive folders for tasks, models, and utilities.
+- Documentation is thorough in HTML docs and README.
+- Many components appear to be stubs or heavy dependencies; this aligns with the "preview" warning in README.
+
+## Relevance to AI Bubble Research
+**Most relevant components:**
+- `finworld/factor/alpha158.py`: rich factor engineering library (technical/factor features).
+- `finworld/data` and `finworld/downloader`: multi-source data hooks (potentially useful, but require API keys).
+- `finworld/metric` and `finworld/evaluator`: evaluation utilities.
+
+**Less relevant:**
+- Heavy RL/LLM agent pipelines, distributed training, and UI components.
+
+## Integration Guide (AI Bubble Research)
+Recommended integration path:
+1. Use `Alpha158` factor generator to compute technical factor panels for AI vs non-AI baskets.
+2. Feed factors into existing bubble diagnostics pipeline for residualization or exploratory regressions.
+3. Avoid RL/LLM training layers unless needed (heavy dependencies).
+
+Included demo:
+- `scripts/integration_demo_alpha158.py`: builds synthetic OHLCV and computes Alpha158 factors.
+
+## Recommendation
+**PARTIALLY USEFUL**
+- Valuable factor engineering and modular structure.
+- Heavy dependencies and preview status limit immediate full adoption.
+- Best used as a source of factor utilities, not as a turnkey platform for bubble diagnostics.
