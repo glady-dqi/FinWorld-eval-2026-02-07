@@ -20,4 +20,6 @@ class Config:
         if self.universe is None:
             self.universe = [
                 "AAPL","MSFT","NVDA","AMZN","META","GOOGL","TSLA","AMD","AVGO","ASML",
+                "JPM","JNJ","XOM","PG","UNH","HD","COST","PEP","KO","DIS",
+                "BAC","WMT","V","MA","PFE","ABBV","CRM","ORCL","INTC","QCOM",
             ]
